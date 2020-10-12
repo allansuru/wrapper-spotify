@@ -36,28 +36,35 @@ describe('Spotify Wrapper', () => {
     });
     describe('Generic search', () => {
         let fetchedStub;
-        before(() => {
+        beforeEach(() => {
             fetchedStub = sinon.stub(global, 'fetch');
         });
 
         it('should call fetch function', () => {
-
             const artists = search();
-
             expect(fetchedStub).to.have.been.calledOnce;
         });
 
         it('it should receive the correct url to fetch', () => {
-            const artist = search('Incubus', 'artist');
 
-            expect(fetchedStub).to.have.been.calledWith('https://api.spotify.com/v1/search?q=Incubus&type=artist');
+            context('passing type artist', () => {
+                const artist = search('Incubus', 'artist');
+                expect(fetchedStub).to.have.been.calledWith('https://api.spotify.com/v1/search?q=Incubus&type=artist');
 
-            const album = search('Incubus', 'album');
+            });
 
-            expect(fetchedStub).to.have.been.calledWith('https://api.spotify.com/v1/search?q=Incubus&type=album');
+            context('passing type `album`', () => {
+                const album = search('Incubus', 'album');
+                expect(fetchedStub).to.have.been.calledWith('https://api.spotify.com/v1/search?q=Incubus&type=album');
+            });
+
+            context('passing more than ont type', () => {
+                const artistisAndAlbums = search('Incubus', ['artist', 'album']);
+                expect(fetchedStub).to.have.been.calledWith('https://api.spotify.com/v1/search?q=Incubus&type=artist,album');
+            });
         });
 
-        after(() => {
+        afterEach(() => {
             fetchedStub.restore();
         });
     });
