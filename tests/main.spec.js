@@ -13,6 +13,18 @@ chai.use(sinonChai);
 global.fetch = require('node-fetch');
 
 describe('Spotify Wrapper', () => {
+    let fetchedStub;
+    let promise;
+    beforeEach(() => {
+        fetchedStub = sinon.stub(global, 'fetch');
+        fetchedStub.resolves({ body: 'json' });
+
+    });
+
+    afterEach(() => {
+        fetchedStub.restore();
+    });
+
     describe('smoke test', () => {
         it('should exist the search method', () => {
             expect(search).to.exist;
@@ -35,16 +47,6 @@ describe('Spotify Wrapper', () => {
         });
     });
     describe('Generic search', () => {
-        let fetchedStub;
-        let promise;
-        beforeEach(() => {
-            fetchedStub = sinon.stub(global, 'fetch');
-            promise = fetchedStub.resolves({ body: 'json' });
-        });
-
-        afterEach(() => {
-            fetchedStub.restore();
-        });
 
         it('should call fetch function', () => {
             const artists = search();
@@ -71,7 +73,45 @@ describe('Spotify Wrapper', () => {
         });
 
         it('should return the JSON Data from the Promise', () => {
-            promise.resolves({ body: 'json' });
+
+            const artists = search('Incubus', 'artist');
+
+            artists.then(() => {
+                expect().to.equal();
+            });
+        });
+    });
+
+    describe('Search Artist', () => {
+        it('should call fetch function', () => {
+            const artist = searchArtist('incubus');
+            expect(fetchedStub).to.have.been.calledOnce;
+        });
+        it('shoud call fetch with the correct URL', () => {
+            const artist = searchArtist('incubus');
+            expect(fetchedStub).to.have.been.calledWith('https://api.spotify.com/v1/search?q=incubus&type=artist');
+        });
+    });
+
+    describe('Search Tracks', () => {
+        it('should call fetch function', () => {
+            const Tracks = searchTracks('incubus');
+            expect(fetchedStub).to.have.been.calledOnce;
+        });
+        it('shoud call fetch with the correct URL', () => {
+            const album = searchTracks('track');
+            expect(fetchedStub).to.have.been.calledWith('https://api.spotify.com/v1/search?q=track&type=tracks');
+        });
+    });
+
+    describe('Search PlayList', () => {
+        it('should call fetch function', () => {
+            const playlist = searchPlaylists('incubus');
+            expect(fetchedStub).to.have.been.calledOnce;
+        });
+        it('shoud call fetch with the correct URL', () => {
+            const playlist = searchPlaylists('playlist');
+            expect(fetchedStub).to.have.been.calledWith('https://api.spotify.com/v1/search?q=playlist&type=playlists');
         });
     });
 });
