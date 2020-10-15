@@ -42,8 +42,6 @@ describe('Spotify Wrapper', () => {
             promise = fetchedStub.resolves({ body: 'json' });
         });
 
-
-
         afterEach(() => {
             fetchedStub.restore();
         });
