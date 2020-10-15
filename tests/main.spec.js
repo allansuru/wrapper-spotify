@@ -93,6 +93,18 @@ describe('Spotify Wrapper', () => {
         });
     });
 
+
+    describe('Search Album', () => {
+        it('should call fetch function', () => {
+            const album = searchAlbuns('incubus');
+            expect(fetchedStub).to.have.been.calledOnce;
+        });
+        it('shoud call fetch with the correct URL', () => {
+            const album = searchAlbuns('incubus');
+            expect(fetchedStub).to.have.been.calledWith('https://api.spotify.com/v1/search?q=incubus&type=album');
+        });
+    });
+
     describe('Search Tracks', () => {
         it('should call fetch function', () => {
             const Tracks = searchTracks('incubus');
