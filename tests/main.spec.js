@@ -5,10 +5,10 @@ import chai, { expect } from 'chai';
 import { search, searchAlbuns, searchArtist, searchTracks, searchPlaylists } from '../src/main';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
-import sinonStubPromise from 'sinon-stub-promise';
+// import sinonStubPromise from 'sinon-stub-promise';
 
 chai.use(sinonChai);
-sinonStubPromise(sinon);
+// sinonStubPromise(sinon);
 
 global.fetch = require('node-fetch');
 
@@ -36,8 +36,16 @@ describe('Spotify Wrapper', () => {
     });
     describe('Generic search', () => {
         let fetchedStub;
+        let promise;
         beforeEach(() => {
             fetchedStub = sinon.stub(global, 'fetch');
+            promise = fetchedStub.resolves({ body: 'json' });
+        });
+
+
+
+        afterEach(() => {
+            fetchedStub.restore();
         });
 
         it('should call fetch function', () => {
@@ -64,8 +72,8 @@ describe('Spotify Wrapper', () => {
             });
         });
 
-        afterEach(() => {
-            fetchedStub.restore();
+        it('should return the JSON Data from the Promise', () => {
+            promise.resolves({ body: 'json' });
         });
     });
 });
