@@ -1,15 +1,19 @@
 /* eslint-disable indent */
 /* eslint-disable no-undef */
+import { API_URL } from './config';
+import { toJSON } from './utils';
 
 
 const options = {
     method: 'GET',
     headers: {
-        Authorization: 'Bearer BQDMdw0ot4t8cTmr6Tu7e3Ac81vL242Wgxt8eWMpRbkrNlhrgRgMTpbOp_LdBSZ36fC-1kaQuEvBgo4FBqUnGhlRdokcAGzWNKOox--hor2n3qI9AXwGjAhQChkwGP1lsvMrHet1rX5vPsK7EBUhA_SRqUMB7h2Jv7-5sVA',
+        Authorization: 'Bearer BQAwaLPIIqPMDXKpaN1-54tcAA-P350QGYjgNOxPSOpUdj_XdJZYucA5XgHZYk7FyYVW6WgliweM6WKrD8CVv0TEw1JnH9ZRAuarTVs4batCy0aAOmrsMxPWPiFuIfGwGLMfAW41QU_nsq0scQ38UmQM7u0pfp05LOgOczo',
         'Content-Type': 'application/json',
     },
 };
-export const search = (q, type) => fetch(`https://api.spotify.com/v1/search?q=${q}&type=${type}`, options).then(data => data.json()).catch(error => error);
+export const search = (q, type) => fetch(`${API_URL}/search?q=${q}&type=${type}`, options)
+    .then(data => toJSON(data))
+    .catch(error => error);
 
 export const searchAlbuns = album => search(album, 'album');
 

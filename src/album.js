@@ -1,12 +1,18 @@
+import { API_URL } from '../src/config';
+import { toJSON } from '../src/utils';
 const options = {
     method: 'GET',
     headers: {
-        Authorization: 'Bearer BQDMdw0ot4t8cTmr6Tu7e3Ac81vL242Wgxt8eWMpRbkrNlhrgRgMTpbOp_LdBSZ36fC-1kaQuEvBgo4FBqUnGhlRdokcAGzWNKOox--hor2n3qI9AXwGjAhQChkwGP1lsvMrHet1rX5vPsK7EBUhA_SRqUMB7h2Jv7-5sVA',
+        Authorization: 'Bearer BQDQoHzWfS996L-KwpVgWG186NYj5g9hL870cXV1ZWpOtF3Fz8oHjCgtpkSkXfobdhG-kdLfLPmUV8XPIl2MpRzqNAKefcUBa36_wMzmZoOotrIDRYDJj0q0LPGrwYEU9ytRxapJgXF_PIXkQ647d3rTV3A7DeqDBpe0jWQ',
         'Content-Type': 'application/json',
     },
 };
 
-export const getAlbum = (id) => fetch(`https://api.spotify.com/v1/albums/${id}`, options).then(data => data.json()).catch(error => error);
+export const getAlbum = (id) => fetch(`${API_URL}/albums/${id}`, options)
+    .then(data => toJSON(data))
+    .catch(error => error);
 
 
-export const getAlbumTracks = (id) => fetch(`https://api.spotify.com/v1/albums/${id}/tracks`, options).then(data => data.json()).catch(error => error);
+export const getAlbumTracks = (id) => fetch(`${API_URL}/albums/${id}/tracks`, options)
+    .then(data => toJSON(data))
+    .catch(error => error);

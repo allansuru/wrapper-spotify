@@ -6,6 +6,7 @@ import chai, { expect } from 'chai';
 import { getAlbum, getAlbumTracks } from '../src/album';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
+import { API_URL } from '../src/config';
 
 chai.use(sinonChai);
 
@@ -52,12 +53,12 @@ describe('Album', () => {
 
             context('passing id album', () => {
                 const album = getAlbum('7d4zNXpbzKsvJpjQi4cIfj');
-                expect(fetchedStub).to.have.been.calledWith('https://api.spotify.com/v1/albums/7d4zNXpbzKsvJpjQi4cIfj');
+                expect(fetchedStub).to.have.been.calledWith(`${API_URL}/albums/7d4zNXpbzKsvJpjQi4cIfj`);
             });
 
             context('passing id album to show tracks', () => {
                 const album = getAlbumTracks('7d4zNXpbzKsvJpjQi4cIfj');
-                expect(fetchedStub).to.have.been.calledWith('https://api.spotify.com/v1/albums/7d4zNXpbzKsvJpjQi4cIfj/tracks');
+                expect(fetchedStub).to.have.been.calledWith(`${API_URL}/albums/7d4zNXpbzKsvJpjQi4cIfj/tracks`);
             });
 
         });
