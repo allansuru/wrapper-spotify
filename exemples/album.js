@@ -9,4 +9,4 @@ albums
     .catch(err => err);
 
 
-    // babale-node exemples/album.js
+    // babel-node exemples/album.js
